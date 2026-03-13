@@ -1,32 +1,49 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import RegisterPage from "../pages/RegisterPage";
-import LoginPage from "../pages/LoginPage";
-import DictionaryPage from "../pages/DictionaryPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const AppRouter = () => {
-  const isLoggedIn = false;
+import LoginPage from "../pages/LoginPage/LoginPage";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
+import DictionaryPage from "../pages/DictionaryPage/DictionaryPage";
+import RecommendPage from "../pages/RecommendPage/RecommendPage";
+import TrainingPage from "../pages/TrainingPage/TrainingPage";
 
+import PrivateRoute from "./PrivateRoute";
+
+export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/register"
-          element={
-            !isLoggedIn ? <RegisterPage /> : <Navigate to="/dictionary" />
-          }
-        />
-        <Route
-          path="/login"
-          element={!isLoggedIn ? <LoginPage /> : <Navigate to="/dictionary" />}
-        />
+        {/* Public routes */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+
+        {/* Private routes */}
         <Route
           path="/dictionary"
-          element={isLoggedIn ? <DictionaryPage /> : <Navigate to="/login" />}
+          element={
+            <PrivateRoute>
+              <DictionaryPage />
+            </PrivateRoute>
+          }
         />
-        <Route path="/" element={<Navigate to="/dictionary" />} />
+
+        <Route
+          path="/recommend"
+          element={
+            <PrivateRoute>
+              <RecommendPage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/training"
+          element={
+            <PrivateRoute>
+              <TrainingPage />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
-};
-
-export default AppRouter;
+}

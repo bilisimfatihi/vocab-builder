@@ -6,6 +6,8 @@ import DictionaryPage from "../pages/DictionaryPage/DictionaryPage";
 import RecommendPage from "../pages/RecommendPage/RecommendPage";
 import TrainingPage from "../pages/TrainingPage/TrainingPage";
 
+import AppLayout from "../components/Layout/AppLayout";
+
 import PrivateRoute from "./PrivateRoute";
 
 export default function AppRoutes() {
@@ -17,32 +19,34 @@ export default function AppRoutes() {
         <Route path="/register" element={<RegisterPage />} />
 
         {/* Private routes */}
-        <Route
-          path="/dictionary"
-          element={
-            <PrivateRoute>
-              <DictionaryPage />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/" element={<AppLayout />}>
+          <Route
+            path="/dictionary"
+            element={
+              <PrivateRoute>
+                <DictionaryPage />
+              </PrivateRoute>
+            }
+          />
 
-        <Route
-          path="/recommend"
-          element={
-            <PrivateRoute>
-              <RecommendPage />
-            </PrivateRoute>
-          }
-        />
+          <Route
+            path="/recommend"
+            element={
+              <PrivateRoute>
+                <RecommendPage />
+              </PrivateRoute>
+            }
+          />
 
-        <Route
-          path="/training"
-          element={
-            <PrivateRoute>
-              <TrainingPage />
-            </PrivateRoute>
-          }
-        />
+          <Route
+            path="/training"
+            element={
+              <PrivateRoute>
+                <TrainingPage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
